@@ -1,11 +1,16 @@
 {
-  "name": "can-edit-table",
-  "version": "0.1.0",
-  "private": true,
+  "name": "edit-form-table",
+  "version": "0.0.6",
+  "description": "base on iview, can-edit-table",
+  "main": "lib/editTable.umd.min.js",
+  "private": false,
+  "license": "MIT",
+  "author": "LilyXu",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lib": "vue-cli-service build --target lib --name editTable --dest lib ./src/packages/index.js"
   },
   "dependencies": {
     "axios": "^0.19.2",

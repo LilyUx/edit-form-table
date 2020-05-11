@@ -1,63 +1,81 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <CanEditTable
-		:columns="columns"
-		:data="data"
-		:loading="loading"
-		@addEditTable="addList"
-		@updateEditTable="updateList"
-		@deleteEditTable="deleteList"
+    <edit-form-table
+      :columns="columns"
+      :loading="loading"
+      :data="data"
+      @saveEditTable="saveEditTable"
+      @deleteEditTable="deleteList"
     />
   </div>
 </template>
 
 <script>
-import CanEditTable from './components/CanEditTable'
+// import CanEditTable from './components/CanEditTable/index.js'
 import axios from 'axios'
-import Vue from 'vue'
 
 export default {
 	name: 'App',
 	data () {
 		return {
+      formItem: {
+        select: 'shanghai',
+      },
 			columns: [
 				{
-					title: '姓名',
-					key: 'name',
+					title: "姓名",
+					slot: "name",
 					type: 'input',
-					width: 200,
 					placeholder: '',
-					clearable: true,
+					// clearable: true,
+					// disabled: true,
+					validate: [
+             { required: true, message: '姓名不能为空', trigger: 'blur' }
+          ]
 				},
 				{
-					title: '性别',
-					key: 'sex',
+					title: "年龄",
+					slot: "age",
+					type: 'input',
+					placeholder: '',
+					// disabled: true,
+					// clearable: true,
+					validate: [
+            { required: true, message: '年龄不能为空', trigger: 'blur' }
+          ],
+        },
+        {
+					title: "性别",
+					slot: "sex",
 					type: 'select',
-					width: 200,
 					placeholder: '',
-					clearable: '',
-					selectItem: [
-						{label: '男', value: '男'},
-						{label: '女', value: '女'}
-					],
-					filterable: ''
+					// multiple: true,
+					// disabled: true,
+					// clearable: true,
+					validate: [
+            { required: true, message: '性别不能为空', trigger: 'blur' }
+          ],
+					item: [
+						{label: '男', value: "men"},
+						{label: '女', value: "women"}
+					]
 				},
 				{
-					title: '年龄',
-					key: 'age',
-					type: 'input'
+					title: "是否活着",
+					slot: "alive",
+					type: 'switch'
 				},
 				{
-					title: '出生日期',
-					key: 'birthday',
-					type: 'input'
+					title: "出生日期",
+					slot: "birthday",
+					type: 'date',
+					placeholder: ''
 				},
 				{
-					title: '地址',
-					key: 'address',
+					title: "地址",
+					slot: "address",
 					type: 'cascader',
-					cascaderItem: [{
+					item: [{
 						value: 'beijing',
 						label: '北京',
 						children: [
@@ -86,64 +104,15 @@ export default {
 							}
 						],
 					}],
-					render: (h, params) => {
-						const address = params.row.address
-						const cascaderItem = this.columns[4].cascaderItem
-						let cascaderData = ''
-						// const recursiveFunction = (str, arr) => {
-						// 	// console.log(str)
-						// 	let recursiveStr = ''
-						// 	for (let i = 0; i < arr.length - 1; i++) {
-						// 		if (str == arr[i].value) {
-						// 			recursiveStr = recursiveStr + arr[i].label
-						// 			console.log(recursiveStr)
-						// 			// return 
-						// 		} else {
-						// 			if (arr[i].children) {
-						// 				recursiveFunction(str, arr[i].children)
-						// 			}
-						// 		}
-						// 	}
-						// 	// arr.forEach(item => {
-						// 	// 	if (str === item.value) { 
-						// 	// 		recursiveStr += item.label
-						// 	// 	} else {
-						// 	// 		if (item.children) {
-						// 	// 			recursiveFunction(str, item.children)
-						// 	// 		}
-						// 	// 	}
-						// 	// })
-						// 	// console.log(recursiveStr)
-						// 	return recursiveStr
-						// }
-						// address.forEach((params,index) => {
-						// 	cascaderItem.forEach
-						// })
-						const recursiveFunction = (arrStr, arrItem) => {
-							let str = ''
-							for (let i = 0; i < arrStr.length; i++) {
-								arrItem.forEach(item => {
-									if (arrStr[i] === item.value) {
-										str += item.label
-										if (i < address.length && item.children) {
-											item.children.forEach()
-										}
-									}
-								})
-							}
-						}
-						// console.log(cascaderData)
-						return <div>{cascaderData}</div>
-					}
+				},
+				{
+					title: "操作",
+					slot: "action"
 				}
-				
 			],
-			loading: false,
 			data: [],
+			loading: false
 		}
-	},
-	components: {
-		CanEditTable
 	},
 	created() {
 		this.getList()
@@ -154,17 +123,7 @@ export default {
 				this.data = res.data.data
 			})
 		},
-		addList(row) {
-			this.loading = true
-			setTimeout(() => {
-				// eslint-disable-next-line no-unused-vars
-				const { _index, _rowKey, ...data} = row
-				Vue.set(this.data, this.data.length, data)
-				this.$Message.success("添加成功")
-				this.loading = false
-			}, 2000);
-		},
-		updateList(row) {
+		saveEditTable(row) {
 			this.loading = true
 			setTimeout(() => {
 				// eslint-disable-next-line no-unused-vars
@@ -175,7 +134,8 @@ export default {
 					}
 					return {...a}
 				})
-				this.$Message.success("修改成功")
+        this.$Message.success("修改成功")
+        console.log(this.data)
 				this.loading = false
 			}, 2000);
 		},
@@ -183,7 +143,7 @@ export default {
 			this.loading = true
 			setTimeout(() => {
 				this.data = this.data.filter((a, index) => index !== row._index)
-				this.$Message.success("删除成功")
+				this.$Message.success("数据保存成功")
 				this.loading = false
 			}, 2000);
 		}
