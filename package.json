@@ -1,8 +1,8 @@
 {
   "name": "edit-form-table",
-  "version": "0.0.6",
+  "version": "0.1.3",
   "description": "base on iview, can-edit-table",
-  "main": "lib/editTable.umd.min.js",
+  "main": "lib/editTable.common.js",
   "private": false,
   "license": "MIT",
   "author": "LilyXu",

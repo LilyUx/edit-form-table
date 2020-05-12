@@ -5,7 +5,7 @@ import 'view-design/dist/styles/iview.css'
 
 Vue.use(ViewUI)
 
-import EditFormTable from '../packages/index'
+import EditFormTable from './packages/index.js'
 Vue.use(EditFormTable)
 
 Vue.config.productionTip = false

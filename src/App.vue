@@ -11,8 +11,8 @@
 </template>
 
 <script>
-// import CanEditTable from './components/CanEditTable/index.js'
 import axios from 'axios'
+import Vue from 'vue'
 
 export default {
 	name: 'App',
@@ -127,16 +127,22 @@ export default {
 			this.loading = true
 			setTimeout(() => {
 				// eslint-disable-next-line no-unused-vars
-				const { _index, _rowKey, ...data} = row
-				this.data = this.data.map((a,index) => {
-					if(index === row._index) {
-						return data
-					}
-					return {...a}
-				})
-        this.$Message.success("修改成功")
-        console.log(this.data)
-				this.loading = false
+        const { _index, _rowKey, ...data} = row
+        console.log(_index)
+        if (_index > this.data.length - 1) {
+          Vue.set(this.data, this.data.length, {...data})
+          this.$Message.success("添加成功")
+          this.loading = false
+        } else {
+          this.data = this.data.map((a,index) => {
+            if(index === row._index) {
+              return data
+            }
+            return {...a}
+          })
+          this.$Message.success("修改成功")
+          this.loading = false
+        }
 			}, 2000);
 		},
 		deleteList(row) {

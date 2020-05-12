@@ -1,6 +1,6 @@
 # can-edit-table
 
-> 基于iview开发的可编辑表格组件
+> 基于iview4.0开发的可编辑表格组件
 
 > version: 0.0.1
 
@@ -12,13 +12,26 @@
 
 2. input、select支持表单校验
 
+## Demo
+  ![img](https://github.com/LilyUx/edit-form-table/tree/master/doc/edit-form-table.gif)
+
 ## Use
 1. `npm install edit-form-table --save` or  `yarn add edit-form-table`
 
-2. 使用插件必须传入一个dom元素，例如：
+2. 在 `main.js`中引用
   ```
-    import edit-form-table from 'edit-form-table'
+  // 项目中如果没有引用iview，还需import
+  import ViewUI from 'view-design';
+  import 'view-design/dist/styles/iview.css';
+  Vue.use(ViewUI);
 
+
+  import EditFormTable from 'edit-form-table'
+  import 'edit-form-table/lib/editTable.css'
+  Vue.use(EditFormTable)
+  ```
+  在代码中使用
+  ```
     <edit-form-table
       :columns="columns"
       :loading="loading"
