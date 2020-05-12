@@ -13,7 +13,7 @@
 2. input、select支持表单校验
 
 ## Demo
-  ![img](https://github.com/LilyUx/edit-form-table/tree/master/doc/edit-form-table.gif)
+  ![img](https://github.com/LilyUx/edit-form-table/blob/master/doc/edit-form-table.gif)
 
 ## Use
 1. `npm install edit-form-table --save` or  `yarn add edit-form-table`
