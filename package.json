@@ -13,7 +13,7 @@
     "lib": "vue-cli-service build --target lib --name editTable --dest lib ./src/packages/index.js"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.6.4",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
